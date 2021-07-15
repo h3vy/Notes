@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Ошибка</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+  <body>
+    <!--SIDEBAR-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand mx-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-bookmark" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M6 8V1h1v6.117L8.743 6.07a.5.5 0 0 1 .514 0L11 7.117V1h1v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8z"/>
+          <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+          <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+        </svg>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="/notes">Главная</a>
+          <a class="nav-item nav-link" href="/notes/new">Новая заметка</a>
+          <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <div class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                  </svg>
+                  <a  th:text="${UserEntity.username}">
+                    Dropdown
+                  </a>
+                </div>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li><a class="dropdown-item" href="/logout">Выход</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <form class="d-flex mx-4" th:method="POST" th:action="@{/notes/search}" th:object="${SearchEntity}">
+         <input class="form-control mx-3" type="text" placeholder="Введите текст"  th:field="*{textNote}" id="textNote">
+         <button class="btn btn-outline-info" type="submit">Поиск</button>
+      </form>
+    </nav>
+    <!---->
+    <div class="row">
+      <div class="col-1 ">
+        <div class="mt-2" th:each="NoteEntity : ${notes}">
+          <div class="card mx-1 bg-light text-dark" style="width: 18rem;">
+            <a class="nav-item nav-link text-dark" th:href="@{/notes/{id}(id=${NoteEntity.getId()})}">
+              <div class="card-body">
+                <h5 class="card-title" th:text="${NoteEntity.getName()}">Название карточки</h5>
+                <p class="card-text" th:text="${NoteEntity.getText()}" >Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-11 text-center mt-5" style="font-size: 3vmax">
+        <br>
+        <br>
+        <br>
+        <h1>Ошибка поиска, такой заметки не существует</h1>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function(){
+        $("p").each(function(){
+          if ($(this).prop("innerHTML").length > 40){
+            let val = $(this).prop("innerHTML");
+            $(this).attr("title", val);
+            $(this).prop("innerHTML", val.substr(0,20) + "...")
+          }
+        });
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+  </body>
+</html>

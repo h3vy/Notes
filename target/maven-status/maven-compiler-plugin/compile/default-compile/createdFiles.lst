@@ -1,0 +1,12 @@
+notes\entity\SearchEntity.class
+notes\entity\UserEntity.class
+notes\controller\NoteController.class
+notes\entity\RegistrEntity.class
+notes\Application.class
+notes\config\WebSecurityConfig.class
+notes\services\UserService.class
+notes\controller\RegistrationController.class
+notes\entity\NoteEntity.class
+notes\repository\NoteRepository.class
+notes\repository\UserRepository.class
+notes\config\MvcConfig.class
